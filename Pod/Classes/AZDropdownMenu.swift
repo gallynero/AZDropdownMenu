@@ -24,6 +24,10 @@ open class AZDropdownMenu: UIView {
 
     /// The handler used when menu item is tapped
     open var cellTapHandler : ((_ indexPath:IndexPath) -> Void)?
+    
+    open var menuShowHandler : (() -> Void)?
+    
+    open var menuHideHandler : (() -> Void)?
 
     // MARK: - Configuration options
 
@@ -277,6 +281,9 @@ open class AZDropdownMenu: UIView {
                 self.frame.origin.y = view.frame.origin.y
                 }, completion: { (finished : Bool) -> Void in
                 self.initialMenuCenter = self.menuView.center
+                    if self.menuShowHandler != nil {
+                        self.menuShowHandler!()
+                    }
             }
         )
     }
@@ -302,6 +309,9 @@ open class AZDropdownMenu: UIView {
                 self.frame.origin.y = rect.origin.y
             }, completion: { (finished : Bool) -> Void in
                 self.initialMenuCenter = self.menuView.center
+                if self.menuShowHandler != nil {
+                    self.menuShowHandler!()
+                }
             }
         )
     }
@@ -319,6 +329,9 @@ open class AZDropdownMenu: UIView {
             completion: { (finished: Bool) -> Void in
                 self.menuView.center = self.initialMenuCenter
                 self.removeFromSuperview()
+                if self.menuHideHandler != nil {
+                    self.menuHideHandler!()
+                }
             }
         )
     }
@@ -418,14 +431,23 @@ public struct AZDropdownMenuItemData {
 
     public let title:String
     public let icon:UIImage?
+    public let color:UIColor?
 
     public init(title:String) {
         self.title = title
         self.icon = nil
+        self.color = nil
     }
 
     public init(title:String, icon:UIImage) {
         self.title = title
         self.icon = icon
+        self.color = nil
+    }
+    
+    public init(title:String, icon:UIImage, color:UIColor) {
+        self.title = title
+        self.icon = icon
+        self.color = color
     }
 }
