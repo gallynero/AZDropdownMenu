@@ -431,14 +431,23 @@ public struct AZDropdownMenuItemData {
 
     public let title:String
     public let icon:UIImage?
+    public let color:UIColor?
 
     public init(title:String) {
         self.title = title
         self.icon = nil
+        self.color = nil
     }
 
     public init(title:String, icon:UIImage) {
         self.title = title
         self.icon = icon
+        self.color = nil
+    }
+    
+    public init(title:String, icon:UIImage, color:UIColor) {
+        self.title = title
+        self.icon = icon
+        self.color = color
     }
 }
